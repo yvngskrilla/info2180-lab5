@@ -3,8 +3,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const countryInput = document.getElementById('country');
     const resultDiv = document.getElementById('result');
 
-    const countryBtn = document.getElementById('lookup');          // Lookup Country
-    const citiesBtn  = document.getElementById('lookup-cities');   // Lookup Cities
+    const countryBtn = document.getElementById('lookup');          
+    const citiesBtn  = document.getElementById('lookup-cities');   
 
     // Helper function to send AJAX request
     function makeRequest(mode) {

@@ -1,7 +1,7 @@
 <?php
 $host = 'localhost';
-$username = 'root';          // or lab5_user if you created that
-$password = '';
+$username = 'lab5_user';          
+$password = 'password123';
 $dbname = 'world';
 
 $conn = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
@@ -9,17 +9,13 @@ $conn = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $p
 $country = isset($_GET['country']) ? $_GET['country'] : '';
 $lookup  = isset($_GET['lookup'])  ? $_GET['lookup']  : '';
 
-/*
- * If lookup=cities → return cities in that country
- * Otherwise       → return country info (the part you already had)
- */
+
 
 if ($lookup === 'cities') {
 
     // --- CITIES MODE ---
 
     if ($country === '') {
-        // No country typed → all cities (joined with countries)
         $stmt = $conn->query(
             "SELECT cities.name, cities.district, cities.population
              FROM cities
@@ -63,7 +59,7 @@ if ($lookup === 'cities') {
     </table>
 
     <?php
-    exit; // stop here so we don't also print the country table
+    exit;
 }
 
 /* --------- COUNTRIES MODE (default) --------- */
