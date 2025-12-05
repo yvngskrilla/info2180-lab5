@@ -1,32 +1,56 @@
-document.addEventListener('DOMContentLoaded', function(){
-    const lookupBtn = document.getElementById('lookup');
+document.addEventListener('DOMContentLoaded', function () {
+
+    const countryInput = document.getElementById('country');
     const resultDiv = document.getElementById('result');
 
-    lookupBtn.addEventListener('click', function(){
-        const country = document.getElementById('country').value.trim();
+    const countryBtn = document.getElementById('lookup');          // Lookup Country
+    const citiesBtn  = document.getElementById('lookup-cities');   // Lookup Cities
 
-        const xhr = new XMLHttpRequest();
+    // Helper function to send AJAX request
+    function makeRequest(mode) {
+        const country = countryInput.value.trim();
+        let url = 'world.php';
+        const params = [];
 
-        let url = 'world.php'
-        if(country !== '') {
-            url += '?country=' + encodeURIComponent(country);
+        if (country !== '') {
+            params.push('country=' + encodeURIComponent(country));
         }
 
-        
+        if (mode === 'cities') {
+            // tell PHP we want city info
+            params.push('lookup=cities');
+        }
+
+        if (params.length > 0) {
+            url += '?' + params.join('&');
+        }
+
+        const xhr = new XMLHttpRequest();
         xhr.open('GET', url, true);
 
-        xhr.onload = function() {
-            if(xhr.status === 200){
+        xhr.onload = function () {
+            if (xhr.status === 200) {
                 resultDiv.innerHTML = xhr.responseText;
-            }
-            else{
+            } else {
                 resultDiv.innerHTML = 'Error: ' + xhr.status;
             }
         };
 
-        xhr.onerror = function(){
+        xhr.onerror = function () {
             resultDiv.innerHTML = 'Network Error. Could not reach the server.';
         };
+
         xhr.send();
+    }
+
+    // When "Lookup Country" is clicked
+    countryBtn.addEventListener('click', function () {
+        makeRequest('country');
     });
+
+    // When "Lookup Cities" is clicked
+    citiesBtn.addEventListener('click', function () {
+        makeRequest('cities');
+    });
+
 });
