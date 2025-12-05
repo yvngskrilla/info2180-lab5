@@ -25,10 +25,23 @@ if ($country === '') {
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
-<ul>
-<?php foreach ($results as $row): ?>
-  <li>
-    <?= htmlspecialchars($row['name']) . ' is ruled by ' . htmlspecialchars($row['head_of_state']); ?>
-  </li>
-<?php endforeach; ?>
-</ul>
+<table class="result-table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Continent</th>
+            <th>Independence Year</th>
+            <th>Head of State</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($results as $row): ?>
+            <tr>
+                <td><?= htmlspecialchars($row['name']); ?></td>
+                <td><?= htmlspecialchars($row['continent']); ?></td>
+                <td><?= htmlspecialchars($row['independence_year']); ?></td>
+                <td><?= htmlspecialchars($row['head_of_state']); ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
